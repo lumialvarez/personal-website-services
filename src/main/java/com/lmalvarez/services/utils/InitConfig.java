@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.lmalvarez.services.conocimiento.Conocimiento;
+import com.lmalvarez.services.conocimiento.ConocimientoRepository;
 import com.lmalvarez.services.proyecto.Proyecto;
 import com.lmalvarez.services.proyecto.ProyectoRepository;
 import com.lmalvarez.services.security.rol.Rol;
@@ -18,11 +20,13 @@ import com.lmalvarez.services.security.usuario.UsuarioRepository;
 @Configuration
 public class InitConfig {
 	@Bean
-	CommandLineRunner commandLineRunnerStudent(ProyectoRepository proyectoRepository) {
+	CommandLineRunner commandLineRunner(ProyectoRepository proyectoRepository, ConocimientoRepository conocimientoRepository) {
 		return args -> {
 			Proyecto p = new Proyecto("Pagina WEB Personal", "Proyecto personal para crear una página donde puedo demostrar mis habilidades", "assets\\img\\proyectos\\personal_webpage\\principal.jpg");
-			
 			proyectoRepository.saveAll(List.of(p));
+			
+			Conocimiento c = new Conocimiento("Java", "Lenguaje", 90, "");
+			conocimientoRepository.saveAll(List.of(c));
 		};
 	}
 	

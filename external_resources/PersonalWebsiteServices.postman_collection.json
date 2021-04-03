@@ -204,6 +204,204 @@
 			]
 		},
 		{
+			"name": "Conocimientos",
+			"item": [
+				{
+					"name": "Int",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/int/v1/conocimiento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"int",
+										"v1",
+										"conocimiento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Java\",\r\n    \"tipo\": \"Lenguaje\",\r\n    \"nivel\": 90,\r\n    \"descripcion\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/int/v1/conocimiento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"int",
+										"v1",
+										"conocimiento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Borrar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/int/v1/conocimiento/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"int",
+										"v1",
+										"conocimiento",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/int/v1/conocimiento/1?nombre=Pagina WEB Personal 2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"int",
+										"v1",
+										"conocimiento",
+										"1"
+									],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "Pagina WEB Personal 2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYxNzQxNTg1NiwiZXhwIjoxNjE3NDUxODU2fQ.gH7NW2UHJm6S8Ak195Azu8acHil7U-l6Ye_6cSDHRvrLBTv8NraESnMwvBwBfFeeiFgsdfcMEWtMljtYn8Y55g",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Ext",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/ext/v1/conocimiento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"ext",
+										"v1",
+										"conocimiento"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Seguridad",
 			"item": [
 				{
