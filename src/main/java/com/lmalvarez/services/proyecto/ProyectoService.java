@@ -1,7 +1,6 @@
 package com.lmalvarez.services.proyecto;
 
 import java.util.List;
-import java.util.Objects;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,22 +38,14 @@ public class ProyectoService {
 	}
 
 	@Transactional
-	public void actualizarProyecto(Long id, String nombre, String descripcion, String img) {
-		Proyecto proyecto = getProyectoById(id);
+	public void actualizarProyecto(Proyecto in) {
+		Proyecto proyecto = getProyectoById(in.getId());
+		
+		proyecto.setNombre(in.getNombre());
+		
+		proyecto.setDescripcion(in.getDescripcion());
 
-		if (nombre != null && nombre.length() > 0 && !Objects.equals(proyecto.getNombre(), nombre)) {
-			proyecto.setNombre(nombre);
-		}
-
-		if (descripcion != null && descripcion.length() > 0
-				&& !Objects.equals(proyecto.getDescripcion(), descripcion)) {
-			proyecto.setDescripcion(descripcion);
-		}
-
-		if (img != null && img.length() > 0 && !Objects.equals(proyecto.getImg(), img)) {
-			proyecto.setImg(img);
-		}
-
+		proyecto.setImg(in.getImg());
 	}
 
 }

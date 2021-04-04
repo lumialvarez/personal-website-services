@@ -1,14 +1,21 @@
 package com.lmalvarez.services.conocimiento;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
 
 @Entity(name = "Conocimiento")
 @Table(name = "conocimiento")
@@ -18,15 +25,20 @@ public class Conocimiento {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "conocimiento_sequence")
 	@Column(name = "id", updatable = false)
 	private Long id;
+
 	@NotBlank(message = "Campo nombre requerido")
 	@Column(nullable = false)
 	private String nombre;
-	@NotBlank(message = "Campo tipo requerido")
-	@Column(nullable = false)
-	private String tipo;
+
+	@Valid
+	@ManyToOne(cascade = { CascadeType.DETACH }, optional = false)
+	@JoinColumn(name = "tipo_conocimiento_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_conocimiento_a_tipo_conocimiento"))
+	private TipoConocimiento tipo;
+
 	@NotNull(message = "Campo nivel requerido")
 	@Column(nullable = false)
 	private Integer nivel;
+
 	@Column(nullable = true)
 	private String descripcion;
 
@@ -34,9 +46,8 @@ public class Conocimiento {
 	}
 
 	public Conocimiento(@NotBlank(message = "Campo nombre requerido") String nombre,
-			@NotBlank(message = "Campo tipo requerido") String tipo,
-			@NotBlank(message = "Campo nivel requerido") Integer nivel,
-			String descripcion) {
+			@NotNull(message = "Campo tipo requerido") TipoConocimiento tipo,
+			@NotNull(message = "Campo nivel requerido") Integer nivel, String descripcion) {
 		super();
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -60,11 +71,11 @@ public class Conocimiento {
 		this.nombre = nombre;
 	}
 
-	public String getTipo() {
+	public TipoConocimiento getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoConocimiento tipo) {
 		this.tipo = tipo;
 	}
 

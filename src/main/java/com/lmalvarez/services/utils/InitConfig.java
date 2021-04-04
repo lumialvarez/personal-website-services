@@ -16,16 +16,23 @@ import com.lmalvarez.services.security.rol.RolNombre;
 import com.lmalvarez.services.security.rol.RolRepository;
 import com.lmalvarez.services.security.usuario.Usuario;
 import com.lmalvarez.services.security.usuario.UsuarioRepository;
+import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
+import com.lmalvarez.services.tipoConocimiento.TipoConocimientoRepository;
 
 @Configuration
 public class InitConfig {
 	@Bean
-	CommandLineRunner commandLineRunner(ProyectoRepository proyectoRepository, ConocimientoRepository conocimientoRepository) {
+	CommandLineRunner commandLineRunner(ProyectoRepository proyectoRepository, ConocimientoRepository conocimientoRepository, TipoConocimientoRepository tipoConocimientoRepository) {
 		return args -> {
 			Proyecto p = new Proyecto("Pagina WEB Personal", "Proyecto personal para crear una página donde puedo demostrar mis habilidades", "assets\\img\\proyectos\\personal_webpage\\principal.jpg");
 			proyectoRepository.saveAll(List.of(p));
 			
-			Conocimiento c = new Conocimiento("Java", "Lenguaje", 90, "");
+			TipoConocimiento tcLenguaje =tipoConocimientoRepository.save(new TipoConocimiento("Lenguaje"));
+			TipoConocimiento tcFramework =tipoConocimientoRepository.save(new TipoConocimiento("Framework"));
+			TipoConocimiento tcHerramienta =tipoConocimientoRepository.save(new TipoConocimiento("Herramienta"));
+			TipoConocimiento tcOtros =tipoConocimientoRepository.save(new TipoConocimiento("Otros"));
+			
+			Conocimiento c = new Conocimiento("Java", tcLenguaje, 90, "");
 			conocimientoRepository.saveAll(List.of(c));
 		};
 	}

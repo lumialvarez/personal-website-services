@@ -1,16 +1,20 @@
 package com.lmalvarez.services.conocimiento;
 
 import java.util.List;
-import java.util.Objects;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lmalvarez.services.exception.CustomNotFoundException;
+import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
+import com.lmalvarez.services.tipoConocimiento.TipoConocimientoService;
 
 @Service
 public class ConocimientoService {
 	@Autowired
 	private ConocimientoRepository conocimientoRepository;
+	
+	@Autowired
+	private TipoConocimientoService tipoConocimientoService;
 
 	public ConocimientoService() {
 		super();
@@ -39,26 +43,17 @@ public class ConocimientoService {
 	}
 
 	@Transactional
-	public void actualizarConocimiento(Long id, String nombre, String tipo, Integer nivel, String descripcion) {
-		Conocimiento conocimiento = getConocimientoById(id);
+	public void actualizarConocimiento(Conocimiento in) {
+		Conocimiento conocimiento = getConocimientoById(in.getId());
 
-		if (nombre != null && nombre.length() > 0 && !Objects.equals(conocimiento.getNombre(), nombre)) {
-			conocimiento.setNombre(nombre);
-		}
-		
-		if (tipo != null && tipo.length() > 0
-				&& !Objects.equals(conocimiento.getTipo(), tipo)) {
-			conocimiento.setTipo(tipo);
-		}
-		
-		if (nivel != null && !Objects.equals(conocimiento.getNivel(), nivel)) {
-			conocimiento.setNivel(nivel);
-		}
+		conocimiento.setNombre(in.getNombre());
 
-		if (descripcion != null && descripcion.length() > 0
-				&& !Objects.equals(conocimiento.getDescripcion(), descripcion)) {
-			conocimiento.setDescripcion(descripcion);
-		}
+		TipoConocimiento tipoConocimiento =  tipoConocimientoService.getTipoConocimientoById(in.getTipo().getId());
+		conocimiento.setTipo(tipoConocimiento);
+		
+		conocimiento.setNivel(in.getNivel());
+
+		conocimiento.setDescripcion(in.getDescripcion());
 	}
 
 

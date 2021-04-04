@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -43,11 +42,9 @@ public class ProyectoController {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping(path = "{proyectoId}")
-	public void updateStudent(@PathVariable("proyectoId") Long proyectoId,
-			@RequestParam(required = false) String nombre, @RequestParam(required = false) String descripcion,
-			@RequestParam(required = false) String img) {
-		proyectoService.actualizarProyecto(proyectoId, nombre, descripcion, img);
+	@PutMapping
+	public void actualizarProyecto(@Valid @RequestBody Proyecto proyecto) {
+		proyectoService.actualizarProyecto(proyecto);
 	}
 
 }

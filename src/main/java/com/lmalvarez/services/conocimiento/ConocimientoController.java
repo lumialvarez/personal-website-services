@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -43,13 +42,9 @@ public class ConocimientoController {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping(path = "{conocimientoId}")
-	public void updateStudent(@PathVariable("conocimientoId") Long conocimientoId,
-			@RequestParam(required = false) String nombre,
-			@RequestParam(required = false) String tipo,
-			@RequestParam(required = false) Integer nivel, 
-			@RequestParam(required = false) String descripcion) {
-		conocimientoService.actualizarConocimiento(conocimientoId, nombre, tipo, nivel, descripcion);
+	@PutMapping
+	public void actualizarConocimiento(@Valid @RequestBody Conocimiento conocimiento) {
+		conocimientoService.actualizarConocimiento(conocimiento);
 	}
 
 }

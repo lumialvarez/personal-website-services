@@ -3,6 +3,7 @@ package com.lmalvarez.services.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 	
-	//Error en peticion 401
+	//Errores en peticion 400
 	@ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> validApiRequestException(MethodArgumentNotValidException ex) {
@@ -23,6 +24,16 @@ public class ApiExceptionHandler {
         for(ObjectError error : ex.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());
         }
+		ApiException apiException = new ApiException("Schema Validation Failed", details, ex, HttpStatus.BAD_REQUEST); 
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
+	
+	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> validApiRequestException(InvalidDataAccessApiUsageException ex) {
+		List<String> details = new ArrayList<String>();   
+		details.add("Uno o mas campos incompletos, verifique los campos de tipo Objeto");
+		details.add(ex.getMessage());
 		ApiException apiException = new ApiException("Schema Validation Failed", details, ex, HttpStatus.BAD_REQUEST); 
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }

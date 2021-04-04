@@ -20,7 +20,7 @@ public class Proyecto {
 	@NotBlank(message = "Campo nombre requerido")
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
-	@NotBlank(message = "descripcion nombre requerido")
+	@NotBlank(message = "Campo descripcion requerido")
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 	@NotBlank(message = "img nombre requerido")
@@ -29,9 +29,9 @@ public class Proyecto {
 
 	public Proyecto() {
 	}
-
+	
 	public Proyecto(@NotBlank(message = "Campo nombre requerido") String nombre,
-			@NotBlank(message = "descripcion nombre requerido") String descripcion,
+			@NotBlank(message = "Campo descripcion requerido") String descripcion,
 			@NotBlank(message = "img nombre requerido") String img) {
 		super();
 		this.nombre = nombre;
