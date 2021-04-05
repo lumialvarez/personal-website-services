@@ -22,10 +22,10 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh 'sudo systemctl stop personal-website-services'
+				sh 'systemctl stop personal-website-services'
 				sh 'rm /opt/services/PersonalWebsiteServices.jar'
 				sh 'cp -a target/PersonalWebsiteServices**.jar /opt/services/PersonalWebsiteServices.jar'
-				sh 'sudo systemctl start personal-website-services'
+				sh 'systemctl start personal-website-services'
 		    }
 		}
 	}
