@@ -17,7 +17,12 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn clean package -DskipTests'
+				sh 'mvn clean package spring-boot:repackage -DskipTests'
+		    }
+		}
+		stage('Deploy') {
+			steps {
+				sh 'cp -a target/PersonalWebsiteServices**.jar /opt/services/PersonalWebsiteServices.jar'
 		    }
 		}
 	}

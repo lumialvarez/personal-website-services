@@ -68,13 +68,33 @@
 			<id>jar</id>
 			<properties>
 				<packaging.type>jar</packaging.type>
-				<spring.profiles.active>dev</spring.profiles.active>
 			</properties>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.springframework.boot</groupId>
 						<artifactId>spring-boot-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+								<configuration>
+									<finalName>NewJarName</finalName>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<classifier>spring-boot</classifier>
+							<mainClass>com.lmalvarez.services.Main</mainClass>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<testFailureIgnore>true</testFailureIgnore>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
