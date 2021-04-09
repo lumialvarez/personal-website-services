@@ -22,10 +22,10 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh 'systemctl stop personal-website-services'
+				sh 'rm /opt/services/Dockerfile'
 				sh 'rm /opt/services/PersonalWebsiteServices.jar'
+				sh 'cp -a Dockerfile /opt/services/Dockerfile'
 				sh 'cp -a target/PersonalWebsiteServices**.jar /opt/services/PersonalWebsiteServices.jar'
-				sh 'systemctl start personal-website-services'
 		    }
 		}
 	}
