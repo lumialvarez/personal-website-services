@@ -22,10 +22,9 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh 'rm /opt/services/Dockerfile'
-				sh 'rm /opt/services/PersonalWebsiteServices.jar'
-				sh 'cp -a Dockerfile /opt/services/Dockerfile'
-				sh 'cp -a target/PersonalWebsiteServices**.jar /opt/services/PersonalWebsiteServices.jar'
+				sh 'sudo rm -rf /opt/services/*'
+				sh 'sudo cp -a Dockerfile /opt/services/Dockerfile'
+				sh 'sudo cp -a target/PersonalWebsiteServices**.jar /opt/services/PersonalWebsiteServices.jar'
 		    }
 		}
 	}
