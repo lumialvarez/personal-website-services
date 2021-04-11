@@ -25,7 +25,7 @@ pipeline {
 				sh 'sudo docker stop personal-website-services || true'
 				sh 'sudo docker rm personal-website-services || true'
 				
-				sh 'sudo docker build -t 'personal-website-services' .'
+				sh 'sudo docker build -t \'personal-website-services\' .'
 
 				sh 'INTERNAL_IP=$(ip route | awk \'/docker0 /{print $9}\')'
 				sh 'sudo docker run --name \'personal-website-services\' --add-host=lmalvarez.com:$INTERNAL_IP -p 9191:9191 -d personal-website-services:latest'
