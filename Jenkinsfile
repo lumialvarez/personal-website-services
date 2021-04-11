@@ -22,9 +22,13 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh 'sudo rm -rf /opt/services/*'
-				sh 'sudo cp -a Dockerfile /opt/services/Dockerfile'
-				sh 'sudo cp -a target/PersonalWebsiteServices**.jar /opt/services/PersonalWebsiteServices.jar'
+				sh "sudo docker stop personal-website-services || true"
+				sh "sudo docker rm personal-website-services || true"
+				
+				sh "sudo docker build -t 'personal-website-services' ."
+
+				sh "INTERNAL_IP=$(ip route | awk '/docker0 /{print $9}')"
+				sh "sudo docker run --name 'personal-website-services' --add-host=lmalvarez.com:$INTERNAL_IP -p 9191:9191 -d personal-website-services:latest"
 		    }
 		}
 	}
