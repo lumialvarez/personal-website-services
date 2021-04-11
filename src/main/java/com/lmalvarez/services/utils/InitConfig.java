@@ -32,8 +32,9 @@ public class InitConfig {
 			TipoConocimiento tcHerramienta =tipoConocimientoRepository.save(new TipoConocimiento("Herramienta"));
 			TipoConocimiento tcOtros =tipoConocimientoRepository.save(new TipoConocimiento("Otros"));
 			
-			Conocimiento c = new Conocimiento("Java", tcLenguaje, 90, "");
-			conocimientoRepository.saveAll(List.of(c));
+			Conocimiento java = new Conocimiento("Java", tcLenguaje, 90, "");
+			Conocimiento javascript = new Conocimiento("Javascript", tcLenguaje, 80, "");
+			conocimientoRepository.saveAll(List.of(java, javascript));
 		};
 	}
 	
