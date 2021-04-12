@@ -27,7 +27,7 @@ pipeline {
 				
 				sh 'sudo docker build -t \'personal-website-services\' .'
 
-				sh 'sudo docker run --name \'personal-website-services\' --add-host=lmalvarez.com:$(ip route | awk \'/docker0 /{print $9}\') -p 9191:9191 -d personal-website-services:latest'
+				sh 'sudo docker run --name \'personal-website-services\' --add-host=lmalvarez.com:$(ip route | awk \'/docker0 /{print $9}\') -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'
 		    }
 		}
 	}

@@ -16,7 +16,7 @@ import com.lmalvarez.services.security.usuario.UsuarioService;
 @RestController
 @RequestMapping("api/ext/v1/auth")
 @CrossOrigin
-public class AuthExtController {
+public class AuthControllerExt {
 
 	@Autowired
 	UsuarioService usuarioService;

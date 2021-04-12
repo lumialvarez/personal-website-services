@@ -1,9 +1,13 @@
 package com.lmalvarez.services.conocimiento;
 
+import java.util.HashSet;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimiento;
+import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimientoService;
 import com.lmalvarez.services.exception.CustomNotFoundException;
 import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
 import com.lmalvarez.services.tipoConocimiento.TipoConocimientoService;
@@ -15,6 +19,9 @@ public class ConocimientoService {
 	
 	@Autowired
 	private TipoConocimientoService tipoConocimientoService;
+	
+	@Autowired
+	private CategoriaConocimientoService categoriaConocimientoService;
 
 	public ConocimientoService() {
 		super();
@@ -54,6 +61,10 @@ public class ConocimientoService {
 		conocimiento.setNivel(in.getNivel());
 
 		conocimiento.setDescripcion(in.getDescripcion());
+		
+		conocimiento.setCategorias(new HashSet<>());
+		
+		in.getCategorias().forEach(cat -> conocimiento.getCategorias().add(categoriaConocimientoService.getCategoriaConocimientoById(cat.getId())));
 	}
 
 

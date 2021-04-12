@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lmalvarez.services.conocimiento.Conocimiento;
-import com.lmalvarez.services.conocimiento.ConocimientoService;
+import com.lmalvarez.services.perfil.Perfil;
+import com.lmalvarez.services.perfil.PerfilService;
 
 @RestController
-@RequestMapping(path = "api/ext/v1/conocimiento")
-public class ConocimientoExtController {
+@RequestMapping(path = "api/ext/v1/perfil")
+public class PerfilControllerExt {
 	@Autowired
-	private ConocimientoService conocimientoService;
+	private PerfilService perfilService;
 	
 	@GetMapping
-	public List<Conocimiento> getConocimientos() {
-		return conocimientoService.getConocimientos();
+	public List<Perfil> getPerfil() {
+		return perfilService.getPerfilActivo();
 	}
 
 }

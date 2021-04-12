@@ -13,7 +13,7 @@ import com.lmalvarez.services.proyecto.ProyectoService;
 
 @RestController
 @RequestMapping(path = "api/ext/v1/proyecto")
-public class ProyectoExtController {
+public class ProyectoControllerExt {
 	@Autowired
 	private ProyectoService proyectoService;
 	
