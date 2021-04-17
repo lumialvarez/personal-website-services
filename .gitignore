@@ -1,3 +1,6 @@
+### Propiedades de pruebas locales ###
+src/main/resources/application.properties
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
