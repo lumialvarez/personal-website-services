@@ -5,6 +5,11 @@ pipeline {
         jdk 'JDK'
     }
 	stages {
+		stage('Prepare') {
+			steps {
+				sh 'cp -r src/main/resources/template.properties src/main/resources/application.properties'
+			}
+		}
 		stage('Test') {
 			steps {
                 sh 'mvn clean test'
