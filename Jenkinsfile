@@ -10,9 +10,7 @@ pipeline {
 	stages {
 		stage('Prepare') {
 			steps {
-				sh 'cp -r src/main/resources/template.properties src/main/resources/application.properties'
-				sh 'cat src/main/resources/application.properties'
-				sh 'sed \'s/{DATASOURCE_URL}/$DATASOURCE_URL/g\' src/main/resources/application.properties'
+				sh 'java ReplaceSecrets.java DATASOURCE_URL $DATASOURCE_URL'
 				sh 'cat src/main/resources/application.properties'
 			}
 		}
