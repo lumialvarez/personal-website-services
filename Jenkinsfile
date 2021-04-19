@@ -8,10 +8,12 @@ pipeline {
 		DATASOURCE_URL = credentials("DATASOURCE_URL")
 		DATASOURCE_USERNAME = credentials("DATASOURCE_USERNAME")
 		DATASOURCE_PASSWORD = credentials("DATASOURCE_PASSWORD")
+		JWT_SECRET = credentials("JWT_SECRET")
 		
 		DATASOURCE_URL_PRUEBAS = credentials("DATASOURCE_URL_PRUEBAS")
 		DATASOURCE_USERNAME_PRUEBAS = credentials("DATASOURCE_USERNAME_PRUEBAS")
 		DATASOURCE_PASSWORD_PRUEBAS = credentials("DATASOURCE_PASSWORD_PRUEBAS")
+		JWT_SECRET_PRUEBAS = credentials("JWT_SECRET_PRUEBAS")
 	}
 	stages {
 		stage('Test') {
@@ -20,6 +22,7 @@ pipeline {
 				sh 'java ReplaceSecrets.java DATASOURCE_URL $DATASOURCE_URL_PRUEBAS'
 				sh 'java ReplaceSecrets.java DATASOURCE_USERNAME $DATASOURCE_USERNAME_PRUEBAS'
 				sh 'java ReplaceSecrets.java DATASOURCE_PASSWORD $DATASOURCE_PASSWORD_PRUEBAS'
+				sh 'java ReplaceSecrets.java JWT_SECRET $JWT_SECRET_PRUEBAS'
 				sh 'cat src/main/resources/application.properties'
 			
                 sh 'mvn clean test'
@@ -36,6 +39,7 @@ pipeline {
 				sh 'java ReplaceSecrets.java DATASOURCE_URL $DATASOURCE_URL'
 				sh 'java ReplaceSecrets.java DATASOURCE_USERNAME $DATASOURCE_USERNAME'
 				sh 'java ReplaceSecrets.java DATASOURCE_PASSWORD $DATASOURCE_PASSWORD'
+				sh 'java ReplaceSecrets.java JWT_SECRET $JWT_SECRET'
 				sh 'cat src/main/resources/application.properties'
 				
 				sh 'mvn clean package spring-boot:repackage -DskipTests'
