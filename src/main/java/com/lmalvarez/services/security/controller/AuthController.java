@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,17 @@ public class AuthController {
     @GetMapping("/user")
     public List<Usuario> getUsuarios(){
     	return usuarioService.getUsuarios();
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/user/{userIdentificador}")
+    public Usuario getUsuarioById(@PathVariable("userIdentificador") String userIdentificador){
+    	try {
+    		int id = Integer.parseInt(userIdentificador);
+    		return usuarioService.getUsuarioById(id);
+    	} catch(NumberFormatException e) {
+    		return usuarioService.getByNombreUsuario(userIdentificador);
+    	}
     }
     
     @PreAuthorize("hasRole('ADMIN')")

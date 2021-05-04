@@ -17,7 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimiento;
 import com.lmalvarez.services.exception.CustomConflictException;
+import com.lmalvarez.services.exception.CustomNotFoundException;
 import com.lmalvarez.services.security.dto.JwtDto;
 import com.lmalvarez.services.security.dto.LoginUsuario;
 import com.lmalvarez.services.security.dto.NuevoUsuario;
@@ -76,7 +78,15 @@ public class UsuarioService {
 		return jwtDto;
 	}
 
-	public Optional<Usuario> getByNombreUsuario(String nombreUsuario) {
-		return usuarioRepository.findByNombreUsuario(nombreUsuario);
+	public Usuario getByNombreUsuario(String nombreUsuario) {
+		Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario)
+				.orElseThrow(() -> new CustomNotFoundException("Usuario " + nombreUsuario + " no existe"));
+		return usuario;
+	}
+
+	public Usuario getUsuarioById(int id) {
+		Usuario usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new CustomNotFoundException("Usuario con id " + id + " no existe"));
+		return usuario;
 	}
 }
