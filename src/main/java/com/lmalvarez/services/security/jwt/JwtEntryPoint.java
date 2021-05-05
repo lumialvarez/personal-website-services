@@ -31,6 +31,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 		ZonedDateTime now = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
 		String strTimedate = now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 		res.addHeader("Content-Type", "application/json");
+		res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		res.getOutputStream().print("{"
 				+ "\"message\":\"Unauthorized\","
 				+ "\"details\":[\"Recurso no autorizado\"],"
