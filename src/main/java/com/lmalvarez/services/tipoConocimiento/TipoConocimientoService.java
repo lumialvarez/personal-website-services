@@ -25,8 +25,8 @@ public class TipoConocimientoService {
 		return tipoConocimiento;
 	}
 
-	public void nuevoTipoConocimiento(TipoConocimiento tipoConocimiento) {
-		tipoConocimientoRepository.save(tipoConocimiento);
+	public TipoConocimiento nuevoTipoConocimiento(TipoConocimiento tipoConocimiento) {
+		return tipoConocimientoRepository.save(tipoConocimiento);
 	}
 
 	public void eliminarTipoConocimiento(Long id) {

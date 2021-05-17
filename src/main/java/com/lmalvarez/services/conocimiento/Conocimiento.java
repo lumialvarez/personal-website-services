@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,7 +25,8 @@ import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimiento;
 import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
 
 @Entity(name = "Conocimiento")
-@Table(name = "conocimiento")
+@Table(name = "conocimiento", uniqueConstraints = {
+		@UniqueConstraint(name = "conocimiento_nombre_unique", columnNames = { "nombre" }) })
 public class Conocimiento {
 	@Id
 	@SequenceGenerator(name = "conocimiento_sequence", sequenceName = "conocimiento_sequence", allocationSize = 1)

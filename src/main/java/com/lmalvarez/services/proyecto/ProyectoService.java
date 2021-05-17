@@ -24,9 +24,15 @@ public class ProyectoService {
 				.orElseThrow(() -> new CustomNotFoundException("Proyecto con id " + id + " no existe"));
 		return proyecto;
 	}
+	
+	public Proyecto getProyectoByNombre(String nombre) {
+		Proyecto proyecto = proyectoRepository.findByNombre(nombre)
+				.orElseThrow(() -> new CustomNotFoundException("Proyecto " + nombre + " no existe"));
+		return proyecto;
+	}
 
-	public void nuevoProyecto(Proyecto proyecto) {
-		proyectoRepository.save(proyecto);
+	public Proyecto nuevoProyecto(Proyecto proyecto) {
+		return proyectoRepository.save(proyecto);
 	}
 
 	public void eliminarProyecto(Long id) {

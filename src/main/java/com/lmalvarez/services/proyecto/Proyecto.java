@@ -7,10 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
 @Entity(name = "Proyecto")
-@Table(name = "proyecto")
+@Table(name = "proyecto", uniqueConstraints = {
+		@UniqueConstraint(name = "proyecto_nombre_unique", columnNames = { "nombre" }) })
 public class Proyecto {
 	@Id
 	@SequenceGenerator(name = "proyecto_sequence", sequenceName = "proyecto_sequence", allocationSize = 1)

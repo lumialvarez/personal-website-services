@@ -1,12 +1,12 @@
 package com.lmalvarez.services.conocimiento;
 
-import java.util.HashSet;
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimiento;
 import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimientoService;
 import com.lmalvarez.services.exception.CustomNotFoundException;
 import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
@@ -36,9 +36,15 @@ public class ConocimientoService {
 				.orElseThrow(() -> new CustomNotFoundException("Conocimiento con id " + id + " no existe"));
 		return conocimiento;
 	}
+	
+	public Conocimiento getConocimientoByNombre(String nombre) {
+		Conocimiento conocimiento = conocimientoRepository.findByNombre(nombre)
+				.orElseThrow(() -> new CustomNotFoundException("Conocimiento " + nombre + " no existe"));
+		return conocimiento;
+	}
 
-	public void nuevoConocimiento(Conocimiento conocimiento) {
-		conocimientoRepository.save(conocimiento);
+	public Conocimiento nuevoConocimiento(Conocimiento conocimiento) {
+		return conocimientoRepository.save(conocimiento);
 	}
 
 	public void eliminarConocimiento(Long id) {
@@ -50,7 +56,7 @@ public class ConocimientoService {
 	}
 
 	@Transactional
-	public void actualizarConocimiento(Conocimiento in) {
+	public Conocimiento actualizarConocimiento(Conocimiento in) {
 		Conocimiento conocimiento = getConocimientoById(in.getId());
 
 		conocimiento.setNombre(in.getNombre());
@@ -62,9 +68,11 @@ public class ConocimientoService {
 
 		conocimiento.setDescripcion(in.getDescripcion());
 		
-		conocimiento.setCategorias(new HashSet<>());
+		in.getCategorias().forEach(cat -> categoriaConocimientoService.getCategoriaConocimientoById(cat.getId()));
 		
-		in.getCategorias().forEach(cat -> conocimiento.getCategorias().add(categoriaConocimientoService.getCategoriaConocimientoById(cat.getId())));
+		conocimiento.setCategorias(in.getCategorias());
+		
+		return conocimiento;
 	}
 
 

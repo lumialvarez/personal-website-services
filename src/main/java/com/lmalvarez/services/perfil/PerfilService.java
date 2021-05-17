@@ -1,13 +1,18 @@
 package com.lmalvarez.services.perfil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lmalvarez.services.conocimiento.Conocimiento;
 import com.lmalvarez.services.conocimiento.ConocimientoService;
 import com.lmalvarez.services.exception.CustomNotFoundException;
 import com.lmalvarez.services.idiomaPerfil.IdiomaPerfilService;
+import com.lmalvarez.services.proyecto.Proyecto;
 import com.lmalvarez.services.proyecto.ProyectoService;
 
 @Service
@@ -66,9 +71,31 @@ public class PerfilService {
 		
 		perfil.setPerfilPersonal(in.getPerfilPersonal());
 		
-		in.getProyectos().forEach(proyecto -> proyectoService.getProyectoById(proyecto.getId()));
+		Set<Proyecto> copyLstProyecto = new HashSet<Proyecto>();
+		for(Proyecto proyecto: in.getProyectos()) {
+			try {
+				proyectoService.getProyectoByNombre(proyecto.getNombre());
+				copyLstProyecto.add(proyecto);
+			} catch (CustomNotFoundException e) {
+				Proyecto tmProyecto = proyectoService.nuevoProyecto(proyecto);
+				copyLstProyecto.add(tmProyecto);
+			}
+		}
 		
-		in.getConocimientos().forEach(conocimiento -> conocimientoService.getConocimientoById(conocimiento.getId()));
+		perfil.setProyectos(copyLstProyecto);
+		
+		Set<Conocimiento> copyLstConocimiento = new HashSet<Conocimiento>();
+		for(Conocimiento conocimiento: in.getConocimientos()) {
+			try {
+				conocimientoService.getConocimientoByNombre(conocimiento.getNombre());
+				copyLstConocimiento.add(conocimiento);
+			} catch (CustomNotFoundException e) {
+				Conocimiento tmConocimiento = conocimientoService.nuevoConocimiento(conocimiento);
+				copyLstConocimiento.add(tmConocimiento);
+			}
+		}
+		
+		perfil.setConocimientos(copyLstConocimiento);
 		
 		perfil.setIdioma(idiomaPerfilService.getIdiomaPerfilById(in.getId()));
 		
