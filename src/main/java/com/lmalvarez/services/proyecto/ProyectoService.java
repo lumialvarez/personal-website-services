@@ -50,6 +50,8 @@ public class ProyectoService {
 		proyecto.setNombre(in.getNombre());
 		
 		proyecto.setDescripcion(in.getDescripcion());
+		
+		proyecto.setDetalle(in.getDetalle());
 
 		proyecto.setImg(in.getImg());
 	}

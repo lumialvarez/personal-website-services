@@ -32,7 +32,7 @@ public class InitConfig {
 	@Bean
 	CommandLineRunner commandLineRunner(ProyectoRepository proyectoRepository, ConocimientoRepository conocimientoRepository, TipoConocimientoRepository tipoConocimientoRepository, CategoriaConocimientoRepository categoriaConocimientoRepository, IdiomaPerfilRepository idiomaPerfilRepository, PerfilRepository perfilRepository) {
 		return args -> {
-			Proyecto proyecto = new Proyecto("Pagina WEB Personal", "Proyecto personal para crear una página donde puedo demostrar mis habilidades", "assets\\img\\proyectos\\personal_webpage\\principal.jpg");
+			Proyecto proyecto = new Proyecto("Pagina WEB Personal", "Proyecto personal para crear una página donde puedo demostrar mis habilidades", "", "assets\\img\\proyectos\\personal_webpage\\principal.jpg");
 			List<Proyecto> lstProyectos = proyectoRepository.saveAll(List.of(proyecto));
 			
 			TipoConocimiento tcLenguaje =tipoConocimientoRepository.save(new TipoConocimiento("Lenguaje"));

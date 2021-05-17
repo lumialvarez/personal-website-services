@@ -25,19 +25,22 @@ public class Proyecto {
 	@NotBlank(message = "Campo descripcion requerido")
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
+	@Column(name = "detalle", columnDefinition = "TEXT")
+	private String detalle;
 	@NotBlank(message = "img nombre requerido")
 	@Column(name = "img", nullable = false)
 	private String img;
 
 	public Proyecto() {
 	}
-	
+
 	public Proyecto(@NotBlank(message = "Campo nombre requerido") String nombre,
-			@NotBlank(message = "Campo descripcion requerido") String descripcion,
+			@NotBlank(message = "Campo descripcion requerido") String descripcion, String detalle,
 			@NotBlank(message = "img nombre requerido") String img) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.detalle = detalle;
 		this.img = img;
 	}
 
@@ -63,6 +66,14 @@ public class Proyecto {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
 	}
 
 	public String getImg() {

@@ -2,7 +2,6 @@ package com.lmalvarez.services.security.usuario;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimiento;
 import com.lmalvarez.services.exception.CustomConflictException;
 import com.lmalvarez.services.exception.CustomNotFoundException;
 import com.lmalvarez.services.security.dto.JwtDto;
