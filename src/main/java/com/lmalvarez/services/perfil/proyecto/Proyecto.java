@@ -1,4 +1,4 @@
-package com.lmalvarez.services.proyecto;
+package com.lmalvarez.services.perfil.proyecto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

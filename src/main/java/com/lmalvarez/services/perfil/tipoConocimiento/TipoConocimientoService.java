@@ -1,4 +1,4 @@
-package com.lmalvarez.services.tipoConocimiento;
+package com.lmalvarez.services.perfil.tipoConocimiento;
 
 import java.util.List;
 import javax.transaction.Transactional;

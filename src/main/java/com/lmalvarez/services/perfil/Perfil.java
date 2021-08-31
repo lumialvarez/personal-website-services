@@ -19,9 +19,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.lmalvarez.services.conocimiento.Conocimiento;
-import com.lmalvarez.services.idiomaPerfil.IdiomaPerfil;
-import com.lmalvarez.services.proyecto.Proyecto;
+import com.lmalvarez.services.perfil.conocimiento.Conocimiento;
+import com.lmalvarez.services.perfil.idiomaPerfil.IdiomaPerfil;
+import com.lmalvarez.services.perfil.proyecto.Proyecto;
 
 @Entity(name = "Perfil")
 @Table(name = "perfil")

@@ -1,4 +1,4 @@
-package com.lmalvarez.services.conocimiento;
+package com.lmalvarez.services.perfil.conocimiento;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,8 +21,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimiento;
-import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
+import com.lmalvarez.services.perfil.categoriaConocimiento.CategoriaConocimiento;
+import com.lmalvarez.services.perfil.tipoConocimiento.TipoConocimiento;
 
 @Entity(name = "Conocimiento")
 @Table(name = "conocimiento", uniqueConstraints = {

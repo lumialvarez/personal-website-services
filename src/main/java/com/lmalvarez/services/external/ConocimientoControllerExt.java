@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lmalvarez.services.conocimiento.Conocimiento;
-import com.lmalvarez.services.conocimiento.ConocimientoService;
+import com.lmalvarez.services.perfil.conocimiento.Conocimiento;
+import com.lmalvarez.services.perfil.conocimiento.ConocimientoService;
 
 @RestController
 @RequestMapping(path = "api/ext/v1/conocimiento")

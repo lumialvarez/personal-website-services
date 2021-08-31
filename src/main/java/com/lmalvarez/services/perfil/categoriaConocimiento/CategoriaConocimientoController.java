@@ -1,4 +1,4 @@
-package com.lmalvarez.services.categoriaConocimiento;
+package com.lmalvarez.services.perfil.categoriaConocimiento;
 
 import java.util.List;
 import javax.validation.Valid;

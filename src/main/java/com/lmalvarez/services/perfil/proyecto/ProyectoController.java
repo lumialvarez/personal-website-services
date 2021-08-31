@@ -1,4 +1,4 @@
-package com.lmalvarez.services.proyecto;
+package com.lmalvarez.services.perfil.proyecto;
 
 import java.util.List;
 import javax.validation.Valid;

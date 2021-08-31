@@ -1,4 +1,4 @@
-package com.lmalvarez.services.idiomaPerfil;
+package com.lmalvarez.services.perfil.tipoConocimiento;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,22 +9,22 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-@Entity(name = "IdiomaPerfil")
-@Table(name = "idioma_perfil")
-public class IdiomaPerfil {
+@Entity(name = "TipoConocimiento")
+@Table(name = "tipo_conocimiento")
+public class TipoConocimiento {
 	@Id
-	@SequenceGenerator(name = "idioma_perfil_sequence", sequenceName = "idioma_perfil_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idioma_perfil_sequence")
+	@SequenceGenerator(name = "tipo_conocimiento_sequence", sequenceName = "tipo_conocimiento_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipo_conocimiento_sequence")
 	@Column(name = "id", updatable = false)
 	private Long id;
 	@NotBlank(message = "Campo nombre requerido")
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 
-	public IdiomaPerfil() {
+	public TipoConocimiento() {
 	}
 
-	public IdiomaPerfil(@NotBlank(message = "Campo nombre requerido") String nombre) {
+	public TipoConocimiento(@NotBlank(message = "Campo nombre requerido") String nombre) {
 		super();
 		this.nombre = nombre;
 	}
@@ -47,6 +47,6 @@ public class IdiomaPerfil {
 
 	@Override
 	public String toString() {
-		return "IdiomaPerfil [id=" + id + ", nombre=" + nombre + "]";
+		return "TipoConocimiento [id=" + id + ", nombre=" + nombre + "]";
 	}
 }

@@ -1,4 +1,4 @@
-package com.lmalvarez.services.conocimiento;
+package com.lmalvarez.services.perfil.conocimiento;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lmalvarez.services.categoriaConocimiento.CategoriaConocimientoService;
 import com.lmalvarez.services.exception.CustomNotFoundException;
-import com.lmalvarez.services.tipoConocimiento.TipoConocimiento;
-import com.lmalvarez.services.tipoConocimiento.TipoConocimientoService;
+import com.lmalvarez.services.perfil.categoriaConocimiento.CategoriaConocimientoService;
+import com.lmalvarez.services.perfil.tipoConocimiento.TipoConocimiento;
+import com.lmalvarez.services.perfil.tipoConocimiento.TipoConocimientoService;
 
 @Service
 public class ConocimientoService {

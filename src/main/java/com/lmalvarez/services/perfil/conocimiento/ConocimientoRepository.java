@@ -1,4 +1,4 @@
-package com.lmalvarez.services.conocimiento;
+package com.lmalvarez.services.perfil.conocimiento;
 
 import java.util.Optional;
 

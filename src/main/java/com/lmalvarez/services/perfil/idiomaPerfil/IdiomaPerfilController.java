@@ -1,4 +1,4 @@
-package com.lmalvarez.services.idiomaPerfil;
+package com.lmalvarez.services.perfil.idiomaPerfil;
 
 import java.util.List;
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package com.lmalvarez.services.tipoConocimiento;
+package com.lmalvarez.services.perfil.categoriaConocimiento;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,22 +9,22 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-@Entity(name = "TipoConocimiento")
-@Table(name = "tipo_conocimiento")
-public class TipoConocimiento {
+@Entity(name = "CategoriaConocimiento")
+@Table(name = "categoria_conocimiento")
+public class CategoriaConocimiento {
 	@Id
-	@SequenceGenerator(name = "tipo_conocimiento_sequence", sequenceName = "tipo_conocimiento_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipo_conocimiento_sequence")
+	@SequenceGenerator(name = "categoria_conocimiento_sequence", sequenceName = "categoria_conocimiento_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categoria_conocimiento_sequence")
 	@Column(name = "id", updatable = false)
 	private Long id;
 	@NotBlank(message = "Campo nombre requerido")
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
-
-	public TipoConocimiento() {
+	
+	public CategoriaConocimiento() {
 	}
 
-	public TipoConocimiento(@NotBlank(message = "Campo nombre requerido") String nombre) {
+	public CategoriaConocimiento(@NotBlank(message = "Campo nombre requerido") String nombre) {
 		super();
 		this.nombre = nombre;
 	}
@@ -43,10 +43,5 @@ public class TipoConocimiento {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	@Override
-	public String toString() {
-		return "TipoConocimiento [id=" + id + ", nombre=" + nombre + "]";
 	}
 }

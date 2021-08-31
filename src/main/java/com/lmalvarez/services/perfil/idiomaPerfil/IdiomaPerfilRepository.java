@@ -1,4 +1,4 @@
-package com.lmalvarez.services.idiomaPerfil;
+package com.lmalvarez.services.perfil.idiomaPerfil;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

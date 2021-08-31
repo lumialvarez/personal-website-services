@@ -8,12 +8,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lmalvarez.services.conocimiento.Conocimiento;
-import com.lmalvarez.services.conocimiento.ConocimientoService;
 import com.lmalvarez.services.exception.CustomNotFoundException;
-import com.lmalvarez.services.idiomaPerfil.IdiomaPerfilService;
-import com.lmalvarez.services.proyecto.Proyecto;
-import com.lmalvarez.services.proyecto.ProyectoService;
+import com.lmalvarez.services.perfil.conocimiento.Conocimiento;
+import com.lmalvarez.services.perfil.conocimiento.ConocimientoService;
+import com.lmalvarez.services.perfil.idiomaPerfil.IdiomaPerfilService;
+import com.lmalvarez.services.perfil.proyecto.Proyecto;
+import com.lmalvarez.services.perfil.proyecto.ProyectoService;
 
 @Service
 public class PerfilService {
