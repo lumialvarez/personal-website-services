@@ -87,4 +87,8 @@ public class UsuarioService {
 				.orElseThrow(() -> new CustomNotFoundException("Usuario con id " + id + " no existe"));
 		return usuario;
 	}
+	
+	public List<Usuario> getUsuariosAdmin(){
+		return usuarioRepository.findByRol(RolNombre.ROLE_ADMIN);
+	}
 }
