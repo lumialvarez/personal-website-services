@@ -1,10 +1,14 @@
 package com.lmalvarez.services.notificacion;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,4 +22,27 @@ public class Notificacion {
 	private Long id;
 	@Column(name = "detalle", columnDefinition = "TEXT")
 	private String detalle;
+	
+	@OneToMany(mappedBy = "notificacion")
+	private Set<UsuarioNotificacion> usuarioNotificaciones = new HashSet<>();
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getDetalle() {
+		return detalle;
+	}
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
+	}
+	public Set<UsuarioNotificacion> getUsuarioNotificaciones() {
+		return usuarioNotificaciones;
+	}
+	public void setUsuarioNotificaciones(Set<UsuarioNotificacion> usuarioNotificaciones) {
+		this.usuarioNotificaciones = usuarioNotificaciones;
+	}
+	
 }

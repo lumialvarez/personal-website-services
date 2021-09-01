@@ -11,11 +11,13 @@ import com.lmalvarez.services.security.rol.RolNombre;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Optional<Usuario> findByNombreUsuario(String nombreUsuario);
-    boolean existsByNombreUsuario(String nombreUsuario);
-    boolean existsByEmail(String email);
-    
-    @Query( "select u from User u  where u.roles in :roles" )
-    List<Usuario> findByRol(RolNombre roleAdmin);
+	Optional<Usuario> findByNombreUsuario(String nombreUsuario);
+
+	boolean existsByNombreUsuario(String nombreUsuario);
+
+	boolean existsByEmail(String email);
+
+	@Query("select u from Usuario u inner join u.roles r where r.rolNombre = :rol")
+	List<Usuario> findByRol(RolNombre rol);
 
 }

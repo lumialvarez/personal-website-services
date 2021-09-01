@@ -3,36 +3,66 @@ package com.lmalvarez.services.notificacion;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lmalvarez.services.security.usuario.Usuario;
 
 @Entity(name = "UsuarioNotificacion")
 @Table(name = "usuario_notificacion")
 public class UsuarioNotificacion {
 	@Id
-	@SequenceGenerator(name = "usuario_notificacion_sequence", sequenceName = "usuario_notificacion_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_notificacion_sequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false)
-	private Long id;
-	@Valid
-	@ManyToOne(cascade = { CascadeType.DETACH }, optional = false)
-	@JoinColumn(name = "notificacion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_usuario_notificacion_a_notificacion"))
-	private Notificacion notificacion;
-	@Valid
-	@ManyToOne(cascade = { CascadeType.DETACH }, optional = false)
-	@JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_usuario_notificacion_a_usuario"))
+	private long id;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-	@NotNull(message = "Campo estado requerido")
-	@Column(name = "lectura", nullable = false)
-	private Boolean lectura;
+
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "notificacion_id")
+	private Notificacion notificacion;
+
+	@Column(nullable = false, columnDefinition = "boolean default false")
+	boolean read;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Notificacion getNotificacion() {
+		return notificacion;
+	}
+
+	public void setNotificacion(Notificacion notificacion) {
+		this.notificacion = notificacion;
+	}
+
+	public boolean isRead() {
+		return read;
+	}
+
+	public void setRead(boolean read) {
+		this.read = read;
+	}
+
 }
