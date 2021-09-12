@@ -1,6 +1,8 @@
 package com.lmalvarez.services.notificacion;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -43,6 +45,22 @@ public class Notificacion {
 	}
 	public void setUsuarioNotificaciones(Set<UsuarioNotificacion> usuarioNotificaciones) {
 		this.usuarioNotificaciones = usuarioNotificaciones;
+	}
+	
+	
+	public static NotificacionDto toDto(Notificacion notificacion) {
+		NotificacionDto dto = new NotificacionDto();
+		dto.setId(notificacion.getId());
+		dto.setDetalle(notificacion.getDetalle());
+		return dto;
+	}
+	
+	public static List<NotificacionDto> toLstDto(List<Notificacion> lstNotificacion){
+		List<NotificacionDto> lstNotificacionDto = new ArrayList<>();
+		for(Notificacion notificacion : lstNotificacion) {
+			lstNotificacionDto.add(toDto(notificacion));
+		}
+		return lstNotificacionDto;
 	}
 	
 }
