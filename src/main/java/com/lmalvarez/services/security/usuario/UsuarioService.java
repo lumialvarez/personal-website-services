@@ -1,5 +1,8 @@
 package com.lmalvarez.services.security.usuario;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,8 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lmalvarez.services.exception.CustomBadCredentialsException;
 import com.lmalvarez.services.exception.CustomConflictException;
 import com.lmalvarez.services.exception.CustomNotFoundException;
+import com.lmalvarez.services.notificacion.NotificacionService;
 import com.lmalvarez.services.security.dto.JwtDto;
 import com.lmalvarez.services.security.dto.LoginUsuario;
 import com.lmalvarez.services.security.dto.NuevoUsuario;
@@ -45,6 +51,9 @@ public class UsuarioService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	NotificacionService notificacionService;
+	
 	
 	public List<Usuario> getUsuarios() {
 		return usuarioRepository.findAll();
@@ -66,9 +75,16 @@ public class UsuarioService {
 
 	}
 
-	public JwtDto login(@Valid LoginUsuario loginUsuario) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
+	public JwtDto login(@Valid LoginUsuario loginUsuario, String ipAddress) throws CustomBadCredentialsException {
+		Authentication authentication;
+		try {
+			authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
+		} catch (BadCredentialsException badCredentialsException) {
+			createNotificacionLoginFallido(loginUsuario.getNombreUsuario(), loginUsuario.getPassword(), ipAddress);
+			throw new CustomBadCredentialsException("Usuario o password invalido", badCredentialsException);
+		}
+		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtProvider.generateToken(authentication);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -90,5 +106,10 @@ public class UsuarioService {
 	
 	public List<Usuario> getUsuariosAdmin(){
 		return usuarioRepository.findByRol(RolNombre.ROLE_ADMIN);
+	}
+	
+	private void createNotificacionLoginFallido(String usuario, String password, String ipAddress) {
+		String fecha = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(LocalDateTime.now());
+		notificacionService.nuevaNotificacion("Intento de logueo fallido Fecha:" + fecha + " User:" + usuario + " Pass:" + password + " Ip:" + ipAddress);
 	}
 }

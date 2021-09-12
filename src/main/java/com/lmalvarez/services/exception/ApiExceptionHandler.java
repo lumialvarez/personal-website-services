@@ -7,7 +7,6 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -63,9 +62,9 @@ public class ApiExceptionHandler {
 	//Peticion no autizada (por falta token, controlada en JwtEntryPoint) 401
 	
 	//Login con datos incorrectos 401
-	@ExceptionHandler(BadCredentialsException.class)
+	@ExceptionHandler(CustomBadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<Object> customBadCredentialsException(BadCredentialsException ex) {
+    public ResponseEntity<Object> customBadCredentialsException(CustomBadCredentialsException ex) {
 		List<String> details = new ArrayList<String>();   
         details.add(ex.getMessage());
 		ApiException apiException = new ApiException("Bad credentials", details, ex, HttpStatus.UNAUTHORIZED); 

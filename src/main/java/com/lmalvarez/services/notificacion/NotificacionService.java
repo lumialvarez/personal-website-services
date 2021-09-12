@@ -50,6 +50,12 @@ public class NotificacionService {
 		List<Notificacion> notificaciones = notificacionRepository.findByReadStatusAndUsuario(false, usuarioActivo.getId());
 		return Notificacion.toLstDto(notificaciones);
 	}
+	
+	public void nuevaNotificacion(String detalle) {
+		    NuevaNotificacionDto nuevaNotificacionDto = new NuevaNotificacionDto();
+			nuevaNotificacionDto.setDetalle(detalle);
+			nuevaNotificacion(nuevaNotificacionDto);
+	}
 
 	public void nuevaNotificacion(NuevaNotificacionDto nuevaNotificacionDto) {
 		List<Usuario> lstUsu;
