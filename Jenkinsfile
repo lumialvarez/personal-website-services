@@ -60,6 +60,7 @@ pipeline {
                         returnStdout: true
                     ).trim()
     			}
+				sh "echo '${BUILD_TAG}' > BUILD_TAG.txt"
 				
 				sh "ssh centos@lmalvarez.com 'sudo rm -rf ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
     			sh "ssh centos@lmalvarez.com 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
