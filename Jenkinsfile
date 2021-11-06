@@ -72,7 +72,7 @@ pipeline {
 			
 				sh "ssh centos@lmalvarez.com 'sudo docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\''"
 				
-				sh "ssh centos@lmalvarez.com 'sudo docker build . -t personal-website-services -f ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}/Dockerfile'"
+				sh "ssh centos@lmalvarez.com 'cd ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME} ; sudo docker build . -t personal-website-services'"
 
 				sh "ssh centos@lmalvarez.com 'sudo docker run --name personal-website-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'"
 		    }
