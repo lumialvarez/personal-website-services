@@ -47,12 +47,33 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh 'sudo docker stop personal-website-services || true'
-				sh 'sudo docker rm personal-website-services || true'
+				script {
+    			    REMOTE_HOME = sh (
+                        script: "ssh centos@lmalvarez.com 'pwd'",
+                        returnStdout: true
+                    ).trim()
+    			}
+    			//script_internal_ip.sh -> ip route | awk '/docker0 /{print $9}'
+    			script {
+    			    INTERNAL_IP = sh (
+                        script: "ssh centos@lmalvarez.com 'sudo bash script_internal_ip.sh'",
+                        returnStdout: true
+                    ).trim()
+    			}
 				
-				sh 'sudo docker build -t \'personal-website-services\' .'
+				sh "ssh centos@lmalvarez.com 'sudo rm -rf ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
+    			sh "ssh centos@lmalvarez.com 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
+				
+				sh "scp -r ${WORKSPACE}/BUILD_TAG.txt centos@lmalvarez.com:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+    			sh "scp -r ${WORKSPACE}/Dockerfile centos@lmalvarez.com:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+				sh "scp -r ${WORKSPACE}/target centos@lmalvarez.com:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+				
+			
+				sh "ssh centos@lmalvarez.com 'sudo docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\''"
+				
+				sh "ssh centos@lmalvarez.com 'sudo docker build -t personal-website-services ${WORKSPACE}/Dockerfile'"
 
-				sh 'sudo docker run --name \'personal-website-services\' --add-host=lmalvarez.com:$(ip route | awk \'/docker0 /{print $9}\') -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'
+				sh "ssh centos@lmalvarez.com 'sudo docker run --name personal-website-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'"
 		    }
 		}
 	}
