@@ -5,6 +5,8 @@ pipeline {
         jdk 'JDK'
     }
 	environment {
+		SSH_MAIN_SERVER = credentials("SSH_MAIN_SERVER")
+	
 		DATASOURCE_URL = credentials("DATASOURCE_URL")
 		DATASOURCE_USERNAME = credentials("DATASOURCE_USERNAME")
 		DATASOURCE_PASSWORD = credentials("DATASOURCE_PASSWORD")
@@ -49,32 +51,32 @@ pipeline {
 			steps {
 				script {
     			    REMOTE_HOME = sh (
-                        script: "ssh centos@lmalvarez.com 'pwd'",
+                        script: "ssh ${SSH_MAIN_SERVER} 'pwd'",
                         returnStdout: true
                     ).trim()
     			}
     			//script_internal_ip.sh -> ip route | awk '/docker0 /{print $9}'
     			script {
     			    INTERNAL_IP = sh (
-                        script: "ssh centos@lmalvarez.com 'sudo bash script_internal_ip.sh'",
+                        script: "ssh ${SSH_MAIN_SERVER} 'sudo bash script_internal_ip.sh'",
                         returnStdout: true
                     ).trim()
     			}
 				sh "echo '${BUILD_TAG}' > BUILD_TAG.txt"
 				
-				sh "ssh centos@lmalvarez.com 'sudo rm -rf ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
-    			sh "ssh centos@lmalvarez.com 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
+				sh "ssh ${SSH_MAIN_SERVER} 'sudo rm -rf ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
+    			sh "ssh ${SSH_MAIN_SERVER} 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
 				
-				sh "scp -r ${WORKSPACE}/BUILD_TAG.txt centos@lmalvarez.com:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
-    			sh "scp -r ${WORKSPACE}/Dockerfile centos@lmalvarez.com:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
-				sh "scp -r ${WORKSPACE}/target centos@lmalvarez.com:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+				sh "scp -r ${WORKSPACE}/BUILD_TAG.txt ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+    			sh "scp -r ${WORKSPACE}/Dockerfile ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+				sh "scp -r ${WORKSPACE}/target ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
 				
 			
-				sh "ssh centos@lmalvarez.com 'sudo docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\''"
+				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\''"
 				
-				sh "ssh centos@lmalvarez.com 'cd ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME} ; sudo docker build . -t personal-website-services'"
+				sh "ssh ${SSH_MAIN_SERVER} 'cd ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME} ; sudo docker build . -t personal-website-services'"
 
-				sh "ssh centos@lmalvarez.com 'sudo docker run --name personal-website-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'"
+				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker run --name personal-website-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'"
 		    }
 		}
 	}
