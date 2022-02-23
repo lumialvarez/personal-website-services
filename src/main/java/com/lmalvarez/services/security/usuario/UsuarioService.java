@@ -91,6 +91,13 @@ public class UsuarioService {
 		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
 		return jwtDto;
 	}
+	
+	public void validateToken(String token) throws CustomBadCredentialsException {
+		boolean isValid = jwtProvider.validateToken(token);
+		if(!isValid) {
+			throw new CustomBadCredentialsException("Token invalido");
+		}
+	}
 
 	public Usuario getByNombreUsuario(String nombreUsuario) {
 		Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario)
@@ -112,4 +119,5 @@ public class UsuarioService {
 		String fecha = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(LocalDateTime.now());
 		notificacionService.nuevaNotificacion("Intento de logueo fallido Fecha:" + fecha + " User:" + usuario + " Pass:" + password + " Ip:" + ipAddress);
 	}
+	
 }

@@ -1,9 +1,9 @@
 pipeline {
 	agent any
 	tools {
-        maven 'Maven'
-        jdk 'JDK'
-    }
+		maven 'Maven'
+		jdk 'JDK'
+	}
 	environment {
 		SSH_MAIN_SERVER = credentials("SSH_MAIN_SERVER")
 	
@@ -27,13 +27,13 @@ pipeline {
 				sh 'java ReplaceSecrets.java JWT_SECRET $JWT_SECRET_PRUEBAS'
 				sh 'cat src/main/resources/application.properties'
 			
-                sh 'mvn clean test'
+				sh 'mvn clean test'
 			}
 			post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
-                }
-            }
+				success {
+					junit 'target/surefire-reports/**/*.xml' 
+				}
+			}
 		}
 		stage('Build') {
 			steps {
@@ -45,30 +45,30 @@ pipeline {
 				sh 'cat src/main/resources/application.properties'
 				
 				sh 'mvn clean package spring-boot:repackage -DskipTests'
-		    }
+			}
 		}
 		stage('Deploy') {
 			steps {
 				script {
-    			    REMOTE_HOME = sh (
-                        script: "ssh ${SSH_MAIN_SERVER} 'pwd'",
-                        returnStdout: true
-                    ).trim()
-    			}
-    			//script_internal_ip.sh -> ip route | awk '/docker0 /{print $9}'
-    			script {
-    			    INTERNAL_IP = sh (
-                        script: "ssh ${SSH_MAIN_SERVER} 'sudo bash script_internal_ip.sh'",
-                        returnStdout: true
-                    ).trim()
-    			}
+					REMOTE_HOME = sh (
+						script: "ssh ${SSH_MAIN_SERVER} 'pwd'",
+						returnStdout: true
+					).trim()
+				}
+				//script_internal_ip.sh -> ip route | awk '/docker0 /{print $9}'
+				script {
+					INTERNAL_IP = sh (
+						script: "ssh ${SSH_MAIN_SERVER} 'sudo bash script_internal_ip.sh'",
+						returnStdout: true
+					).trim()
+				}
 				sh "echo '${BUILD_TAG}' > BUILD_TAG.txt"
 				
 				sh "ssh ${SSH_MAIN_SERVER} 'sudo rm -rf ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
-    			sh "ssh ${SSH_MAIN_SERVER} 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
+				sh "ssh ${SSH_MAIN_SERVER} 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
 				
 				sh "scp -r ${WORKSPACE}/BUILD_TAG.txt ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
-    			sh "scp -r ${WORKSPACE}/Dockerfile ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
+				sh "scp -r ${WORKSPACE}/Dockerfile ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
 				sh "scp -r ${WORKSPACE}/target ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
 				
 			
@@ -77,7 +77,7 @@ pipeline {
 				sh "ssh ${SSH_MAIN_SERVER} 'cd ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME} ; sudo docker build . -t personal-website-services'"
 
 				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker run --name personal-website-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9191:9191 -d --restart unless-stopped personal-website-services:latest'"
-		    }
+			}
 		}
 	}
 }
