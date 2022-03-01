@@ -7,6 +7,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,8 +65,10 @@ public class AuthController {
     	return usuarioService.login(loginUsuario, ipAddress);
     }
     
-    @GetMapping("/check")
-    public void validateToken(@RequestParam("token") String token) throws CustomBadCredentialsException{
-    	usuarioService.validateToken(token);
+    @GetMapping("/current")
+    public Usuario checkCurrentUser() throws CustomBadCredentialsException{
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	String username = ((UserDetails)auth.getPrincipal()).getUsername();
+    	return usuarioService.getByNombreUsuario(username);
     }
 }
