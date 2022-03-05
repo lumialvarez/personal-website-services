@@ -18,6 +18,19 @@ pipeline {
 		JWT_SECRET_PRUEBAS = credentials("JWT_SECRET_PRUEBAS")
 	}
 	stages {
+		stage('Get Version') {
+			steps {
+				script {
+					MAVEN_VERSION = sh (
+						script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
+						returnStdout: true
+					).trim()
+				}
+				script {
+					currentBuild.displayName = "#" + currentBuild.number + " - v" + MAVEN_VERSION
+				}
+			}
+		}
 		stage('Test') {
 			steps {
 				sh 'rm src/main/resources/application.properties || true'
