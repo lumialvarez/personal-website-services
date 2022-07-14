@@ -89,7 +89,7 @@ pipeline {
 				
 				sh "ssh ${SSH_MAIN_SERVER} 'cd ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME} ; sudo docker build . -t personal-website-services'"
 
-				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker run --name personal-website-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9292:9292 -d --restart unless-stopped personal-website-services:latest'"
+				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker run --name personal-website-services --net=backend-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9292:9292 -d --restart unless-stopped personal-website-services:latest'"
 			}
 		}
 	}
