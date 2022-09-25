@@ -75,6 +75,8 @@ pipeline {
 
 				sh "docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\' "
 
+				sh "sleep 5s"
+
 				sh "docker run --name personal-website-services --net=backend-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9292:9292 -d --restart unless-stopped lmalvarez/personal-website-services:${APP_VERSION}"
 			}
 		}
