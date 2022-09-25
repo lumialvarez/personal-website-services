@@ -18,7 +18,7 @@ pipeline {
 		DATASOURCE_PASSWORD_PRUEBAS = credentials("DATASOURCE_PASSWORD_PRUEBAS")
 		JWT_SECRET_PRUEBAS = credentials("JWT_SECRET_PRUEBAS")
 
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub-lmalvarez')
+		DOCKERHUB_CREDENTIALS = credentials('dockerhub-lmalvarez')
 	}
 	stages {
 		stage('Get Version') {
