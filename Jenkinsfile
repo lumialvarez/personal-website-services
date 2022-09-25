@@ -68,7 +68,7 @@ pipeline {
 				//script_internal_ip.sh -> ip route | awk '/docker0 /{print $9}'
 				script {
 					INTERNAL_IP = sh (
-						script: "ssh ${SSH_MAIN_SERVER} 'sudo bash script_internal_ip.sh'",
+						script: '''ssh ${SSH_MAIN_SERVER} 'sudo bash script_internal_ip.sh' ''',
 						returnStdout: true
 					).trim()
 				}
