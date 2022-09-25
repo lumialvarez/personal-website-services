@@ -60,7 +60,7 @@ pipeline {
 				
 				sh 'mvn clean package spring-boot:repackage -DskipTests'
 
-				sh "cd target ; docker build . -t lmalvarez/personal-website-services:${APP_VERSION}"
+				sh "docker build . -t lmalvarez/personal-website-services:${APP_VERSION}"
 			}
 		}
 		stage('Deploy') {
