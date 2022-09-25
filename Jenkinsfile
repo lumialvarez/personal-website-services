@@ -1,3 +1,4 @@
+def APP_VERSION
 pipeline {
 	agent any
 	tools {
@@ -21,13 +22,13 @@ pipeline {
 		stage('Get Version') {
 			steps {
 				script {
-					MAVEN_VERSION = sh (
+					APP_VERSION = sh (
 						script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
 						returnStdout: true
 					).trim()
 				}
 				script {
-					currentBuild.displayName = "#" + currentBuild.number + " - v" + MAVEN_VERSION
+					currentBuild.displayName = "#" + currentBuild.number + " - v" + APP_VERSION
 				}
 			}
 		}
@@ -58,16 +59,12 @@ pipeline {
 				sh 'cat src/main/resources/application.properties'
 				
 				sh 'mvn clean package spring-boot:repackage -DskipTests'
+
+				sh "cd target ; docker build . -t lmalvarez/personal-website-services:${APP_VERSION}'"
 			}
 		}
 		stage('Deploy') {
 			steps {
-				script {
-					REMOTE_HOME = sh (
-						script: "ssh ${SSH_MAIN_SERVER} 'pwd'",
-						returnStdout: true
-					).trim()
-				}
 				//script_internal_ip.sh -> ip route | awk '/docker0 /{print $9}'
 				script {
 					INTERNAL_IP = sh (
@@ -75,22 +72,18 @@ pipeline {
 						returnStdout: true
 					).trim()
 				}
-				sh "echo '${BUILD_TAG}' > BUILD_TAG.txt"
-				
-				sh "ssh ${SSH_MAIN_SERVER} 'sudo rm -rf ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
-				sh "ssh ${SSH_MAIN_SERVER} 'sudo mkdir -p -m 777 ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}'"
-				
-				sh "scp -r ${WORKSPACE}/BUILD_TAG.txt ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
-				sh "scp -r ${WORKSPACE}/Dockerfile ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
-				sh "scp -r ${WORKSPACE}/target ${SSH_MAIN_SERVER}:${REMOTE_HOME}/tmp_jenkins/${JOB_NAME}"
-				
-			
-				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\''"
-				
-				sh "ssh ${SSH_MAIN_SERVER} 'cd ${REMOTE_HOME}/tmp_jenkins/${JOB_NAME} ; sudo docker build . -t personal-website-services'"
 
-				sh "ssh ${SSH_MAIN_SERVER} 'sudo docker run --name personal-website-services --net=backend-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9292:9292 -d --restart unless-stopped personal-website-services:latest'"
+				sh "docker rm -f personal-website-services &>/dev/null && echo \'Removed old container\' "
+
+				sh "docker run --name personal-website-services --net=backend-services --add-host=lmalvarez.com:${INTERNAL_IP} -p 9292:9292 -d --restart unless-stopped lmalvarez/personal-website-services:${APP_VERSION}"
 			}
 		}
+		stage('Push') {
+            steps {
+                sh '''echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin '''
+
+                sh "docker push lmalvarez/personal-website-services:${APP_VERSION}"
+            }
+        }
 	}
 }
