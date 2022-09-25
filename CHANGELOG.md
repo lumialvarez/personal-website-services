@@ -1,6 +1,9 @@
 # Changelog
 Web services
 
+## [1.0.2] - 25/09/2022
+### Fixed
+- Refactor Jenkinsfile
 
 ## [1.0.1] - 13/07/2022
 ### Fixed
