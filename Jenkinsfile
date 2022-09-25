@@ -17,6 +17,8 @@ pipeline {
 		DATASOURCE_USERNAME_PRUEBAS = credentials("DATASOURCE_USERNAME_PRUEBAS")
 		DATASOURCE_PASSWORD_PRUEBAS = credentials("DATASOURCE_PASSWORD_PRUEBAS")
 		JWT_SECRET_PRUEBAS = credentials("JWT_SECRET_PRUEBAS")
+
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub-lmalvarez')
 	}
 	stages {
 		stage('Get Version') {
@@ -82,7 +84,7 @@ pipeline {
 		}
 		stage('Push') {
             steps {
-                sh "setfacl --modify user:jenkins:rw /var/run/docker.sock"
+                //sh "setfacl --modify user:jenkins:rw /var/run/docker.sock"
 
                 sh '''echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin '''
 
