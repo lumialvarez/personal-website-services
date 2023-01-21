@@ -2,7 +2,7 @@ package com.lmalvarez.services.notificacion;
 
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class NuevaNotificacionDto {
 	@NotBlank(message = "Campo detalle es requerido")

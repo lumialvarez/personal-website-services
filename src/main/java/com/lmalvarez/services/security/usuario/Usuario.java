@@ -1,7 +1,7 @@
 package com.lmalvarez.services.security.usuario;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lmalvarez.services.security.rol.Rol;
