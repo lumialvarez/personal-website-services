@@ -93,7 +93,7 @@
 						</executions>
 						<configuration>
 							<classifier>spring-boot</classifier>
-							<mainClass>com.lmalvarez.services.Main</mainClass>
+							<mainClass>com.lmalvarez.services.PersonalWebsiteServicesApplication</mainClass>
 						</configuration>
 					</plugin>
 					<plugin>
