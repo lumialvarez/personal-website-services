@@ -3,6 +3,12 @@ Web services
 
 ## [Unreleased]
 
+## [1.0.4] - 28/01/2023
+### Fixed
+- Update to JDK17
+- Update to Spring Boot 3
+- Update to Jakarta EE 9
+
 ## [1.0.3] - 20/01/2023
 ### Fixed
 - Remove Deploy Stage

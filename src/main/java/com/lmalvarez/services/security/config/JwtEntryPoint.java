@@ -1,4 +1,4 @@
-package com.lmalvarez.services.security.jwt;
+package com.lmalvarez.services.security.config;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

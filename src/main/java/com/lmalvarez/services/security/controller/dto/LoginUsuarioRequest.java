@@ -1,8 +1,8 @@
-package com.lmalvarez.services.security.dto;
+package com.lmalvarez.services.security.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class LoginUsuario {
+public class LoginUsuarioRequest {
     @NotBlank(message = "Campo nombreUsuario es requerido")
     private String nombreUsuario;
     @NotBlank(message = "Campo password es requerido")

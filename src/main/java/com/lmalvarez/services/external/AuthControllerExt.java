@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lmalvarez.services.exception.CustomBadCredentialsException;
-import com.lmalvarez.services.security.dto.JwtDto;
-import com.lmalvarez.services.security.dto.LoginUsuario;
+import com.lmalvarez.services.security.controller.dto.LoginResponse;
+import com.lmalvarez.services.security.controller.dto.LoginUsuarioRequest;
 import com.lmalvarez.services.security.usuario.UsuarioService;
 
 @RestController
@@ -24,8 +24,8 @@ public class AuthControllerExt {
 	UsuarioService usuarioService;
 
 	@PostMapping("/login")
-	public JwtDto login(@Valid @RequestBody LoginUsuario loginUsuario, HttpServletRequest request) throws CustomBadCredentialsException {
+	public LoginResponse login(@Valid @RequestBody LoginUsuarioRequest loginUsuarioRequest, HttpServletRequest request) throws CustomBadCredentialsException {
 		String ipAddress = request.getRemoteAddr();
-    	return usuarioService.login(loginUsuario, ipAddress);
+    	return usuarioService.login(loginUsuarioRequest, ipAddress);
 	}
 }
