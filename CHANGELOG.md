@@ -3,6 +3,10 @@ Web services
 
 ## [Unreleased]
 
+## [1.0.5] - 28/01/2023
+### Fixed
+- Update to JDK17 in CI jenkins pipeline
+
 ## [1.0.4] - 28/01/2023
 ### Fixed
 - Update to JDK17

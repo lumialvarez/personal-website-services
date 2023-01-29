@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.lmalvarez</groupId>
 	<artifactId>PersonalWebsiteServices</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>PersonalWebsiteServices</name>
 	<description>Servicios web que sirven a la pagina web personal</description>
 	<properties>

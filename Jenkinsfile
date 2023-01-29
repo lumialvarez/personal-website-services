@@ -3,7 +3,7 @@ pipeline {
 	agent any
 	tools {
 		maven 'Maven'
-		jdk 'JDK'
+		jdk 'JDK17'
 	}
 	environment {
 		SSH_MAIN_SERVER = credentials("SSH_MAIN_SERVER")
