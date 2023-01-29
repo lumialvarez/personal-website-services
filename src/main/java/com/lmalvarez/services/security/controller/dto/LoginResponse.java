@@ -1,16 +1,16 @@
-package com.lmalvarez.services.security.dto;
+package com.lmalvarez.services.security.controller.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class JwtDto {
+public class LoginResponse {
     private String token;
     private String bearer = "Bearer";
     private String nombreUsuario;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtDto(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
+    public LoginResponse(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
         this.nombreUsuario = nombreUsuario;
         this.authorities = authorities;

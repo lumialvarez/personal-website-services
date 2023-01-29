@@ -3,6 +3,8 @@ package com.lmalvarez.services.notificacion;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lmalvarez.services.security.rol.RolNombre;
+import com.lmalvarez.services.security.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class NotificacionService {
 	private UsuarioNotificacionRepository usuNotificacionRepository;
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UsuarioRepository usuarioRepository;
 
 	public NotificacionService() {
 		super();
@@ -40,13 +42,13 @@ public class NotificacionService {
 	}
 	
 	public List<NotificacionDto> getReadNotificacionByUsuario(String nombreUsuario) {
-		Usuario usuarioActivo = usuarioService.getByNombreUsuario(nombreUsuario);
+		Usuario usuarioActivo = getByNombreUsuario(nombreUsuario);
 		List<Notificacion> notificaciones = notificacionRepository.findByReadStatusAndUsuario(true, usuarioActivo.getId());
 		return Notificacion.toLstDto(notificaciones);
 	}
 
 	public List<NotificacionDto> getUnreadNotificacionByUsuario(String nombreUsuario) {
-		Usuario usuarioActivo = usuarioService.getByNombreUsuario(nombreUsuario);
+		Usuario usuarioActivo = getByNombreUsuario(nombreUsuario);
 		List<Notificacion> notificaciones = notificacionRepository.findByReadStatusAndUsuario(false, usuarioActivo.getId());
 		return Notificacion.toLstDto(notificaciones);
 	}
@@ -66,12 +68,12 @@ public class NotificacionService {
 			for(String nombreUsuarioNuevaNotif : nuevaNotificacionDto.getUsuarios()) {
 				UsuarioNotificacion usuarioNotificacion = new UsuarioNotificacion();
 				usuarioNotificacion.setNotificacion(notificacion);
-				usuarioNotificacion.setUsuario(usuarioService.getByNombreUsuario(nombreUsuarioNuevaNotif));
+				usuarioNotificacion.setUsuario(getByNombreUsuario(nombreUsuarioNuevaNotif));
 				usuarioNotificacion.setRead(false);
 				notificacion.getUsuarioNotificaciones().add(usuarioNotificacion);
 			}
 		} else {
-			lstUsu = usuarioService.getUsuariosAdmin();
+			lstUsu = getUsuariosAdmin();
 			for (Usuario usuario : lstUsu) {
 				UsuarioNotificacion usuarioNotificacion = new UsuarioNotificacion();
 				usuarioNotificacion.setNotificacion(notificacion);
@@ -87,7 +89,7 @@ public class NotificacionService {
 	}
 
 	public void setNotificacionRead(long notificacionId, String nombreUsuario) {
-		Usuario usuarioActivo = usuarioService.getByNombreUsuario(nombreUsuario);
+		Usuario usuarioActivo = getByNombreUsuario(nombreUsuario);
 		Notificacion notificacion = getNotificacionById(notificacionId);
 		boolean existeNotificacion = false;
 		for (UsuarioNotificacion un : notificacion.getUsuarioNotificaciones()) {
@@ -100,5 +102,15 @@ public class NotificacionService {
 			throw new CustomNotFoundException("Relacion de notificacion y usuario no existe");
 		}
 		notificacionRepository.save(notificacion);
+	}
+
+	private Usuario getByNombreUsuario(String nombreUsuario) {
+		Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario)
+				.orElseThrow(() -> new CustomNotFoundException("Usuario " + nombreUsuario + " no existe"));
+		return usuario;
+	}
+
+	private List<Usuario> getUsuariosAdmin(){
+		return usuarioRepository.findByRol(RolNombre.ROLE_ADMIN);
 	}
 }

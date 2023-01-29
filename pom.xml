@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.4</version>
+		<version>3.0.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lmalvarez</groupId>
 	<artifactId>PersonalWebsiteServices</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<name>PersonalWebsiteServices</name>
 	<description>Servicios web que sirven a la pagina web personal</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<packaging.type>jar</packaging.type>
 	</properties>
 	<dependencies>
@@ -30,6 +30,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 
 		<dependency>
@@ -49,16 +59,16 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.5.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
+			<version>1.6.14</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -83,7 +93,7 @@
 						</executions>
 						<configuration>
 							<classifier>spring-boot</classifier>
-							<mainClass>com.lmalvarez.services.Main</mainClass>
+							<mainClass>com.lmalvarez.services.PersonalWebsiteServicesApplication</mainClass>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -108,17 +118,9 @@
 			</properties>
 			<dependencies>
 				<dependency>
-					<groupId>javax.servlet</groupId>
-					<artifactId>javax.servlet-api</artifactId>
-					<version>4.0.1</version>
-					<scope>provided</scope>
-				</dependency>
-				<!-- When Spring boot suport Jakarta EE... someday -->
-				<dependency>
 					<groupId>jakarta.servlet</groupId>
 					<artifactId>jakarta.servlet-api</artifactId>
-					<version>5.0.0</version>
-					<scope>provided</scope>
+					<version>6.0.0</version>
 				</dependency>
 				<dependency>
 					<groupId>org.springframework.boot</groupId>

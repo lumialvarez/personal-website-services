@@ -94,6 +94,7 @@ public class ApiExceptionHandler {
 	@ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<Object> genericException(Exception ex) {
+        ex.printStackTrace();
 		List<String> details = new ArrayList<String>();   
         details.add(ex.getMessage());
         details.add(ex.toString());
